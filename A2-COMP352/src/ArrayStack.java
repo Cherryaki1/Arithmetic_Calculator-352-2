@@ -1,9 +1,14 @@
 public class ArrayStack<E> implements Stack<E> {
+    public static int CAPACITY = 100;
     private E[] S;
     private int top = -1;
+
+    public ArrayStack() {
+        this(CAPACITY);
+    }
     
-    public ArrayStack(int size) {
-        S = (E[]) new Object[size];
+    public ArrayStack(int capacity) {
+        S = (E[]) new Object[capacity];
     }
 
     @Override
@@ -31,6 +36,7 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
+        //exception if stack is empty
         E tmp = S[this.top];
         S[this.top] = null;
         this.top--;
