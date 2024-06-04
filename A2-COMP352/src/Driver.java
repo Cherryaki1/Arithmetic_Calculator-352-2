@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) {
-      System.out.println(Calculator.evalExp("3-(1*2)"));
-      
+      String expression = "4-3*2+7";
+      System.out.println(Calculator.evalExp(expression));
       /*Scanner sc = null;
       PrintWriter pw = null;
          try {
