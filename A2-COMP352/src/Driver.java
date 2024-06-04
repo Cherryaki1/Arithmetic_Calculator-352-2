@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) {
-         Scanner sc = null;
+      System.out.println(Calculator.evalExp("3-1"));
+      
+      /*Scanner sc = null;
          try {
             sc = new Scanner(new FileInputStream("test.txt"));
             while (sc.hasNextLine()) {
@@ -13,6 +15,6 @@ public class Driver {
 
          } catch (FileNotFoundException e) {
             System.out.println("File could not be opened.");
-         }
+         }*/
     }
 }

@@ -1,23 +1,26 @@
 public class Calculator {
-    private static Stack<Double> valStk;
-    private static Stack<Character> opStk;
+    private static Stack<Double> valStk = new ArrayStack<Double>();
+    private static Stack<Character> opStk = new ArrayStack<Character>();
 
     public static double evalExp(String token) {
         int i = 0;
-        while (i < token.length() - 1) {
+        while (i < token.length()) {
             char c = token.charAt(i);
             if (isNumber(c)) {
                 String num = "";
-                while (i < token.length() - 1 && isNumber(c)) {
+                while (isNumber(c)) {
                     num += c;
-                    c = token.charAt(++i);
+                    if (i < token.length() - 1) {
+                        c = token.charAt(++i);
+                    } else
+                        break;
                 }
-                i--;
                 valStk.push(Double.parseDouble(num));
             } else {
                 repeatOps(c);
                 opStk.push(c);
             }
+            i++;
         }
         repeatOps('$');
         return valStk.top();
