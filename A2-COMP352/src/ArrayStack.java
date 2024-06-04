@@ -1,5 +1,5 @@
 public class ArrayStack<E> implements Stack<E> {
-    public static int CAPACITY = 100;
+    public static int CAPACITY = 10;
     private E[] S;
     private int top = -1;
 
@@ -23,7 +23,9 @@ public class ArrayStack<E> implements Stack<E> {
 
     @Override
     public void push(E e) {
-        //exception if stack is full
+        if (size() == S.length) {
+            doubleSize();
+        }
         S[++this.top] = e;
     }
 
@@ -41,6 +43,14 @@ public class ArrayStack<E> implements Stack<E> {
         S[this.top] = null;
         this.top--;
         return tmp;
+    }
+
+    public void doubleSize() {
+        E[] tmp = (E[]) new Object[S.length * 2];
+        for (int i = 0; i < S.length; i++) {
+            tmp[i] = S[i];
+        }
+        S = tmp;
     }
     
 }

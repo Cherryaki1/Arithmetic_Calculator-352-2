@@ -8,7 +8,7 @@ public class Calculator {
             char c = token.charAt(i);
             if (isNumber(c)) {
                 String num = "";
-                while (isNumber(c)) {
+                while (isNumber(c)) { 
                     num += c;
                     if (i < token.length() - 1) {
                         c = token.charAt(++i);
