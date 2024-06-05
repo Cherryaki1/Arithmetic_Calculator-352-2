@@ -9,6 +9,13 @@ public class Calculator {
             String z = tokens[i];
             if (isNumber(z)) {
                 valStk.push(Double.parseDouble(z));
+            } else if (z.equals("(")) {
+                opStk.push(z);
+            } else if (z.equals(")")) {
+                while (!opStk.isEmpty() && !opStk.top().equals("(")) {
+                    doOp();
+                }
+                opStk.pop();
             } else {
                 repeatOps(z);
                 opStk.push(z);
@@ -21,20 +28,19 @@ public class Calculator {
 
     public static void repeatOps(String z) {
         while (valStk.size() > 1 && (prec(z) >= prec(opStk.top()))) {
+            if (opStk.top().equals("(")) {
+                break;
+            }
             doOp();
         }
     }
 
     public static void doOp() {
+        String op = opStk.pop();
         double x = (double) valStk.pop();
         double y = (double) valStk.pop();
-        String op = opStk.pop();
-        switch (op) {
-            case "(":
 
-                break;
-            case ")": // to fix
-                break;
+        switch (op) {
             case "+":
                 valStk.push(y + x);
                 break;

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) {
-      String expression = "2 * (80 / 10) + 50";
+      String expression = "2 * ( 6 - ( 3 + 2 ) )";
       System.out.println(Calculator.evalExp(expression));
       /*Scanner sc = null;
       PrintWriter pw = null;
