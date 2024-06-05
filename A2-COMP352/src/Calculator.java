@@ -1,80 +1,130 @@
 public class Calculator {
-    private static Stack<Double> valStk = new ArrayStack<Double>();
-    private static Stack<Character> opStk = new ArrayStack<Character>();
+    private static Stack<Object> valStk = new ArrayStack<>();
+    private static Stack<String> opStk = new ArrayStack<>();
 
-    public static double evalExp(String token) {
+    public static Object evalExp(String expression) { // returns either a number or true/false
+        String[] tokens = expression.split(" ");
         int i = 0;
-        while (i < token.length()) {
-            char c = token.charAt(i);
-            if (isNumber(c)) {
-                String num = "";
-                num += c;
-                valStk.push(Double.parseDouble(num));
+        while (i < tokens.length) {
+            String z = tokens[i];
+            if (isNumber(z)) {
+                valStk.push(Double.parseDouble(z));
             } else {
-                repeatOps(c);
-                opStk.push(c);
+                repeatOps(z);
+                opStk.push(z);
             }
             i++;
         }
-        repeatOps('$');
+        repeatOps("$");
         return valStk.top();
     }
 
-    public static void repeatOps(char c) {
-        while (valStk.size() > 1 && (prec(c) >= prec(opStk.top()))) {
+    public static void repeatOps(String z) {
+        while (valStk.size() > 1 && (prec(z) >= prec(opStk.top()))) {
             doOp();
         }
     }
 
     public static void doOp() {
-        double x = valStk.pop();
-        double y = valStk.pop();
-        char op = opStk.pop();
-        //if op is ( or ) ?
+        double x = (double) valStk.pop();
+        double y = (double) valStk.pop();
+        String op = opStk.pop();
         switch (op) {
-            case '+':
+            case "(":
+
+                break;
+            case ")": // to fix
+                break;
+            case "+":
                 valStk.push(y + x);
                 break;
-            case '-':
+            case "-":
                 valStk.push(y - x);
                 break;
-            case '*':
+            case "*":
                 valStk.push(y * x);
                 break;
-            case '/':
+            case "/":
                 valStk.push(y / x);
                 break;
-            case '^':
+            case "^":
                 valStk.push(Math.pow(y, x));
                 break;
-            // >, >=, <, <=, ==, !=
+            case ">":
+                valStk.push(y > x);
+                break;
+            case ">=":
+                valStk.push(y >= x);
+                break;
+            case "<":
+                valStk.push(y < x);
+                break;
+            case "<=":
+                valStk.push(y <= x);
+                break;
+            case "==":
+                valStk.push(y == x);
+                break;
+            case "!=":
+                valStk.push(y != x);
+                break;
         }
     }
 
-    public static boolean isNumber(char c) {
-        return (c >= '0' && c <= '9');
+    public static boolean isNumber(String z) {
+        for (int i = 0; i < z.length(); i++) {
+            if (z.charAt(i) < '0' || z.charAt(i) > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public static int prec(char op) {
+    public static int prec(String op) {
         switch (op) {
-            case '(':
-            case ')':
+            case "(":
+            case ")":
                 return 1;
-            case '^':
+            case "^":
                 return 2;
-            case '*':
-            case '/':
+            case "*":
+            case "/":
                 return 3;
-            case '+':
-            case '-':
+            case "+":
+            case "-":
                 return 4;
-            case '>':
-            case '<':
+            case ">":
+            case "<":
+            case ">=":
+            case "<=":
                 return 5;
-            case '$':
+            case "==":
+            case "!=":
                 return 6;
-            // >=, <=, ==, !=
+            case "$":
+                return 7;
         }
         return -1;
+    }
+
+    public boolean ParenMatch(String[] tokens) {
+        int n = tokens.length;
+        for (int i = 0; i < n; i++) {
+            if (tokens[i].equals("(")) {
+                opStk.push(tokens[i]);
+            } else if (tokens[i].equals(")")) {
+                if (opStk.isEmpty()) {
+                    return false;
+                }
+                if (opStk.pop() != "(") {
+                    return false;
+                }
+            }
+        }
+        if (opStk.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

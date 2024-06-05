@@ -1,3 +1,5 @@
+import java.util.EmptyStackException;
+
 public class ArrayStack<E> implements Stack<E> {
     public static int CAPACITY = 10;
     private E[] S;
@@ -37,8 +39,10 @@ public class ArrayStack<E> implements Stack<E> {
     }
 
     @Override
-    public E pop() {
-        //exception if stack is empty
+    public E pop() throws EmptyStackException {
+        if (S.length == 0) {
+            throw new EmptyStackException();
+        }
         E tmp = S[this.top];
         S[this.top] = null;
         this.top--;
