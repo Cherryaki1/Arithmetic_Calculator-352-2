@@ -4,6 +4,12 @@ public class Calculator {
 
     public static Object evalExp(String expression) { // returns either a number or true/false
         String[] tokens = expression.split(" ");
+        
+        // Check for matching parentheses
+        if (!parenMatch(tokens)) {
+            return "Error: Mismatched parentheses";
+        }
+        
         int i = 0;
         while (i < tokens.length) {
             String z = tokens[i];
@@ -113,24 +119,17 @@ public class Calculator {
         return -1;
     }
 
-    public boolean ParenMatch(String[] tokens) {
-        int n = tokens.length;
-        for (int i = 0; i < n; i++) {
-            if (tokens[i].equals("(")) {
-                opStk.push(tokens[i]);
-            } else if (tokens[i].equals(")")) {
-                if (opStk.isEmpty()) {
-                    return false;
-                }
-                if (opStk.pop() != "(") {
+    public static boolean parenMatch(String[] tokens) {
+        Stack<String> tempStack = new ArrayStack<>();
+        for (String token : tokens) {
+            if (token.equals("(")) {
+                tempStack.push(token);
+            } else if (token.equals(")")) {
+                if (tempStack.isEmpty() || !tempStack.pop().equals("(")) {
                     return false;
                 }
             }
         }
-        if (opStk.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return tempStack.isEmpty();
     }
 }
