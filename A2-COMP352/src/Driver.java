@@ -1,3 +1,7 @@
+//Botao Yang (40213554) and Valerie Nguyen (40284261)
+//COMP 352 AA Programming Assignment 2
+//Due June 9 2024
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -6,7 +10,7 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) {
-      String expression = "2 ^ 2 * ( 6 - ( 3 + 2 ) + 6 )";
+      String expression = "2 + ( 3 + 12 )";
       System.out.println(Calculator.evalExp(expression));
       /*Scanner sc = null;
       PrintWriter pw = null;

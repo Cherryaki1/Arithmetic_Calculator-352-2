@@ -1,46 +1,50 @@
 public class Calculator {
-    private static Stack<Object> valStk = new ArrayStack<>();
-    private static Stack<String> opStk = new ArrayStack<>();
+    private static Stack<Object> valStk = new ArrayStack<>(); // Stack to hold values
+    private static Stack<String> opStk = new ArrayStack<>(); // Stack to hold operators
+    
+    // Method to evaluate expression
+    // Returns either a number or true/false
+    public static Object evalExp(String expression) { 
+        String[] tokens = expression.split(" "); // Break expression into tokens using " " as delimiter
 
-    public static Object evalExp(String expression) { // returns either a number or true/false
-        String[] tokens = expression.split(" ");
-        
         // Check for matching parentheses
         if (!parenMatch(tokens)) {
             return "Error: Mismatched parentheses";
         }
-        
+
         int i = 0;
         while (i < tokens.length) {
             String z = tokens[i];
+            // If token is a number, push token to valStk
             if (isNumber(z)) {
                 valStk.push(Double.parseDouble(z));
-            } else if (z.equals("(")) {
-                opStk.push(z);
-            } else if (z.equals(")")) {
-                while (!opStk.isEmpty() && !opStk.top().equals("(")) {
+            } else if (z.equals(")")) { // If token is ")", evaluate operations inside the parentheses
+                while (!opStk.top().equals("(")) {
                     doOp();
                 }
-                opStk.pop();
-            } else {
+                opStk.pop(); // Pop "(" inside stack
+            } else { // If token is a operator, evaluate operation if current token has a lower precendence than top of opStk and push token to opStk
                 repeatOps(z);
                 opStk.push(z);
             }
             i++;
         }
-        repeatOps("$");
+        repeatOps("$"); // To evaluate all remaining operators
         return valStk.top();
     }
 
-    public static void repeatOps(String z) {
-        while (valStk.size() > 1 && (prec(z) >= prec(opStk.top()))) {
-            if (opStk.top().equals("(")) {
+    // Method to peform higher or equal precedence operations
+    public static void repeatOps(String op) {
+        // If the top of opStk has a higher or equal precedence than op, perform operation
+        while (valStk.size() > 1 && (prec(op) >= prec(opStk.top()))) {
+            if (opStk.top().equals("(")) { //If top of opStk is "(", do nothing
                 break;
             }
             doOp();
         }
     }
 
+    // Method to evaluate operation
     public static void doOp() {
         String op = opStk.pop();
         double x = (double) valStk.pop();
@@ -83,6 +87,7 @@ public class Calculator {
         }
     }
 
+    // Method to determine if the String is a number
     public static boolean isNumber(String z) {
         for (int i = 0; i < z.length(); i++) {
             if (z.charAt(i) < '0' || z.charAt(i) > '9') {
@@ -92,6 +97,7 @@ public class Calculator {
         return true;
     }
 
+    // Method to determine the precedence of an operator
     public static int prec(String op) {
         switch (op) {
             case "(":
