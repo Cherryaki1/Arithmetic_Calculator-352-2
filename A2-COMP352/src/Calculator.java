@@ -115,12 +115,12 @@ public class Calculator {
 
     // Method to determine if the String is a number
     public static boolean isNumber(String z) {
-        for (int i = 0; i < z.length(); i++) {
-            if (z.charAt(i) < '0' || z.charAt(i) > '9') {
-                return false;
-            }
+        try {
+            Double.parseDouble(z);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
-        return true;
     }
 
     // Method to determine the precedence of an operator
