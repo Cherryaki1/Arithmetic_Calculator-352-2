@@ -9,24 +9,22 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Driver {
-    public static void main(String[] args) {
-      String expression = "6 ^ 2 / ( 32 - 29 ) ^ 2";
-      System.out.println(Calculator.evalExp(expression));
-      /*Scanner sc = null;
+   public static void main(String[] args) {
+      Scanner sc = null;
       PrintWriter pw = null;
-         try {
-            sc = new Scanner(new FileInputStream("input.txt"));
-            pw = new PrintWriter(new FileOutputStream("output.txt"));
-            while (sc.hasNextLine()) {
-               String expression = sc.nextLine();
-               double answer = Calculator.evalExp(expression);
-               pw.println(expression + " = ");
-               pw.print(answer);
-            }
-            sc.close();
-            pw.close();
-         } catch (FileNotFoundException e) {
-            System.out.println("File could not be opened.");
-         }*/
-    }
+      try {
+         sc = new Scanner(new FileInputStream("input.txt"));
+         pw = new PrintWriter(new FileOutputStream("output.txt"));
+         while (sc.hasNextLine()) {
+            String expression = sc.nextLine();
+            double answer = Calculator.evalExp(expression);
+            pw.println("Expression: " + expression);
+            pw.println("Answer: " + answer);
+         }
+         sc.close();
+         pw.close();
+      } catch (FileNotFoundException e) {
+         System.out.println("File could not be opened.");
+      }
+   }
 }

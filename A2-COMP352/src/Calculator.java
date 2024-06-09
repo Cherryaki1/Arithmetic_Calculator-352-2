@@ -1,15 +1,21 @@
 public class Calculator {
-    private static Stack<Object> valStk = new ArrayStack<>(); // Stack to hold values
+    private static Stack<Double> valStk = new ArrayStack<>(); // Stack to hold values
     private static Stack<String> opStk = new ArrayStack<>(); // Stack to hold operators
-    
+
     // Method to evaluate expression
-    // Returns either a number or true/false
-    public static Object evalExp(String expression) { 
+    public static Double evalExp(String expression) {
         String[] tokens = expression.split(" "); // Break expression into tokens using " " as delimiter
 
-        // Check for matching parentheses
-        if (!parenMatch(tokens)) {
-            return "Error: Mismatched parentheses";
+        /*
+         * // Check for matching parentheses
+         * if (!parenMatch(tokens)) {
+         * return "Error: Mismatched parentheses";
+         * }
+         */
+
+         // Reset the stack
+        while (!valStk.isEmpty()) {
+            valStk.pop();
         }
 
         int i = 0;
@@ -23,7 +29,8 @@ public class Calculator {
                     doOp();
                 }
                 opStk.pop(); // Pop "(" inside stack
-            } else { // If token is a operator, evaluate operation if current token has a lower precendence than top of opStk and push token to opStk
+            } else { // If token is a operator, evaluate operation if current token has a lower
+                     // precendence than top of opStk and push token to opStk
                 repeatOps(z);
                 opStk.push(z);
             }
@@ -35,9 +42,10 @@ public class Calculator {
 
     // Method to peform higher or equal precedence operations
     public static void repeatOps(String op) {
-        // If the top of opStk has a higher or equal precedence than op, perform operation
+        // If the top of opStk has a higher or equal precedence than op, perform
+        // operation
         while (valStk.size() > 1 && (prec(op) >= prec(opStk.top()))) {
-            if (opStk.top().equals("(")) { //If top of opStk is "(", do nothing
+            if (opStk.top().equals("(")) { // If top of opStk is "(", do nothing
                 break;
             }
             doOp();
@@ -66,23 +74,41 @@ public class Calculator {
             case "^":
                 valStk.push(Math.pow(y, x));
                 break;
-            case ">":
-                valStk.push(y > x);
+            case ">": // Push 1 for true and 0 for false
+                if (y > x) {
+                    valStk.push(1.0);
+                } else
+                    valStk.push(0.0);
                 break;
             case ">=":
-                valStk.push(y >= x);
+                if (y >= x) {
+                    valStk.push(1.0);
+                } else
+                    valStk.push(0.0);
                 break;
             case "<":
-                valStk.push(y < x);
+                if (y < x) {
+                    valStk.push(1.0);
+                } else
+                    valStk.push(0.0);
                 break;
             case "<=":
-                valStk.push(y <= x);
+                if (y <= x) {
+                    valStk.push(1.0);
+                } else
+                    valStk.push(0.0);
                 break;
             case "==":
-                valStk.push(y == x);
+                if (y == x) {
+                    valStk.push(1.0);
+                } else
+                    valStk.push(0.0);
                 break;
             case "!=":
-                valStk.push(y != x);
+                if (y != x) {
+                    valStk.push(1.0);
+                } else
+                    valStk.push(0.0);
                 break;
         }
     }
