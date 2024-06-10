@@ -6,14 +6,7 @@ public class Calculator {
     public static Double evalExp(String expression) {
         String[] tokens = expression.split(" "); // Break expression into tokens using " " as delimiter
 
-        /*
-         * // Check for matching parentheses
-         * if (!parenMatch(tokens)) {
-         * return "Error: Mismatched parentheses";
-         * }
-         */
-
-         // Reset the stack
+        // Reset the stack
         while (!valStk.isEmpty()) {
             valStk.pop();
         }
@@ -29,8 +22,7 @@ public class Calculator {
                     doOp();
                 }
                 opStk.pop(); // Pop "(" inside stack
-            } else { // If token is a operator, evaluate operation if current token has a lower
-                     // precendence than top of opStk and push token to opStk
+            } else { // If token is a operator, evaluate operation if current token has a lower precendence than top of opStk and push token to opStk
                 repeatOps(z);
                 opStk.push(z);
             }
@@ -42,8 +34,7 @@ public class Calculator {
 
     // Method to peform higher or equal precedence operations
     public static void repeatOps(String op) {
-        // If the top of opStk has a higher or equal precedence than op, perform
-        // operation
+        // If the top of opStk has a higher or equal precedence than op, perform operation
         while (valStk.size() > 1 && (prec(op) >= prec(opStk.top()))) {
             if (opStk.top().equals("(")) { // If top of opStk is "(", do nothing
                 break;
@@ -149,19 +140,5 @@ public class Calculator {
                 return 7;
         }
         return -1;
-    }
-
-    public static boolean parenMatch(String[] tokens) {
-        Stack<String> tempStack = new ArrayStack<>();
-        for (String token : tokens) {
-            if (token.equals("(")) {
-                tempStack.push(token);
-            } else if (token.equals(")")) {
-                if (tempStack.isEmpty() || !tempStack.pop().equals("(")) {
-                    return false;
-                }
-            }
-        }
-        return tempStack.isEmpty();
     }
 }

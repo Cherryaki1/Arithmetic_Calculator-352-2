@@ -13,16 +13,19 @@ public class ArrayStack<E> implements Stack<E> {
         S = (E[]) new Object[capacity];
     }
 
+    // Returns the number of elements in the stack
     @Override
     public int size() {
         return this.top + 1;
     }
 
+    // Checks whether the stack is empty
     @Override
     public boolean isEmpty() {
         return this.top == -1;
     }
 
+    // Adds an element at the top of the stack
     @Override
     public void push(E e) {
         if (size() == S.length) {
@@ -31,6 +34,7 @@ public class ArrayStack<E> implements Stack<E> {
         S[++this.top] = e;
     }
 
+    // Returns the element at the top of the stack
     @Override
     public E top() {
         if (isEmpty()) {
@@ -38,6 +42,7 @@ public class ArrayStack<E> implements Stack<E> {
         } else return S[this.top];
     }
 
+    // Removes and returns the element at the top of the stack
     @Override
     public E pop() throws EmptyStackException {
         if (S.length == 0) {
@@ -49,6 +54,7 @@ public class ArrayStack<E> implements Stack<E> {
         return tmp;
     }
 
+    // Doubles the size of the stack
     public void doubleSize() {
         E[] tmp = (E[]) new Object[S.length * 2];
         for (int i = 0; i < S.length; i++) {
